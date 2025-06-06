@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z & S Construction Inc. - Building Your Future in Queens, NY</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background-color: #111827; color: #f3f4f6; }
+        .frosted-glass { background-color: rgba(17, 24, 39, 0.6); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .animated-gradient { background: linear-gradient(-45deg, #1e3a8a, #374151, #ca8a04, #111827); background-size: 400% 400%; animation: gradient-flow 15s ease infinite; position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; }
+        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        #planning-canvas-container { width: 100%; height: 100%; min-height: 400px; }
+        #planning-canvas { display: block; width: 100%; height: 100%; }
+        
+        .services-blueprint-wall { stroke: #64748b; stroke-width: 2; fill: none; }
+        .services-blueprint-zone { fill: #475569; stroke: #94a3b8; stroke-width: 1; transition: fill 0.3s ease-in-out; cursor: pointer; }
+        .services-blueprint-zone.highlight { fill: rgba(202, 138, 4, 0.5); }
+        .services-blueprint-zone:focus { outline: 2px solid #facc15; outline-offset: 2px; }
+
+        .contact-blueprint-line { stroke-width: 1.5; fill: none; stroke: #475569; }
+
+        .project-card { position: relative; overflow: hidden; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
+        .project-card img { transition: transform 0.4s ease-out; }
+        .project-card:hover img { transform: scale(1.05); }
+        .project-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(17,24,39,0.9), rgba(17,24,39,0)); padding: 1.5rem; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 frosted-glass"><nav class="container mx-auto px-6 py-4 flex justify-between items-center"><a href="#" class="text-2xl font-bold text-white">Z &amp; S<span class="text-yellow-500"> Construction Inc.</span></a><div class="hidden md:flex space-x-8 items-center"><a href="#services" class="text-gray-300 hover:text-yellow-500 transition-colors">Services</a><a href="#planning" class="text-gray-300 hover:text-yellow-500 transition-colors">Planning</a><a href="#projects" class="text-gray-300 hover:text-yellow-500 transition-colors">Projects</a><a href="#contact" class="text-gray-300 hover:text-yellow-500 transition-colors">Contact</a></div><a href="#contact" class="hidden md:inline-block bg-yellow-500 text-gray-900 font-bold py-2 px-6 rounded-full hover:bg-yellow-400 transition-colors shadow-lg">Get a Quote</a><button id="mobile-menu-button" class="md:hidden text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg></button></nav><div id="mobile-menu" class="hidden md:hidden bg-gray-800"><a href="#services" class="block py-2 px-4 text-sm hover:bg-gray-700">Services</a><a href="#planning" class="block py-2 px-4 text-sm hover:bg-gray-700">Planning</a><a href="#projects" class="block py-2 px-4 text-sm hover:bg-gray-700">Projects</a><a href="#contact" class="block py-2 px-4 text-sm hover:bg-gray-700">Contact</a><a href="#contact" class="block py-4 px-4 text-center bg-yellow-500 text-gray-900 font-bold">Get a Quote</a></div></header>
+    <main>
+        <section class="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden"><div class="animated-gradient"></div><div class="z-10"><h1 class="text-4xl md:text-7xl font-bold tracking-tight text-white leading-tight mb-4">Building Visions, Creating Reality.</h1><p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">From groundbreaking to finishing touches, Z & S Construction Inc. delivers unparalleled quality and commitment to every project.</p><div class="flex justify-center space-x-4"><a href="#services" class="bg-yellow-500 text-gray-900 font-bold py-3 px-8 rounded-full hover:bg-yellow-400 transition-colors text-lg shadow-xl">Our Services</a><a href="#projects" class="bg-gray-700 bg-opacity-50 border border-gray-600 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-700 transition-colors text-lg">View Projects</a></div></div></section>
+        
+        <section id="services" class="py-24 bg-gray-800"><div class="container mx-auto px-6"><div class="text-center max-w-3xl mx-auto mb-16"><h2 class="text-4xl font-bold mb-4">Residential Construction Services</h2><p class="text-lg text-gray-400">From gourmet kitchens to spa-like bathrooms, we transform your house into a dream home. Hover or tap on the blueprint to explore our areas of expertise.</p></div><div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"><div id="interactive-blueprint-container"></div><div id="service-details-panel" class="flex flex-col"><img id="service-image" src="https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Featured service" class="w-full h-80 object-cover rounded-lg shadow-2xl mb-6"><div id="service-text-content"><h3 id="service-title" class="text-3xl font-bold text-yellow-400 mb-3">Explore Our Craft</h3><p id="service-description" class="text-gray-300 text-lg leading-relaxed">Each space in your home has unique potential. Hover or tap on a room in the floor plan to see how we bring our commitment to quality and design to every project.</p></div></div></div></div></section>
+
+        <section id="planning" class="py-24 bg-gray-900 overflow-hidden">
+            <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="text-content">
+                    <h2 class="text-4xl font-bold mb-4">Meticulous Planning, Flawless Execution.</h2>
+                    <p class="text-lg text-gray-300 mb-6">Every great structure begins with a solid plan. Our process starts with detailed architectural blueprints, ensuring every angle is considered and every material is accounted for before the first shovel hits the ground.</p>
+                    <a href="#contact" class="text-yellow-400 font-semibold hover:text-yellow-300">Start Planning Your Project →</a>
+                </div>
+                <div id="planning-canvas-container">
+                    <canvas id="planning-canvas"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-24 bg-gray-800/50"><div class="container mx-auto px-6 text-center"><h2 class="text-4xl font-bold mb-4">Our Work in Queens</h2><p class="text-lg text-gray-400 max-w-3xl mx-auto mb-12">We take pride in every detail. Explore a selection of our recently completed projects that showcase our commitment to quality and craftsmanship in the borough.</p><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="project-card">
+                <img src="https://images.pexels.com/photos/6434622/pexels-photo-6434622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Modernized pre-war apartment kitchen." class="w-full h-96 object-cover">
+                <div class="project-overlay">
+                    <h3 class="text-xl font-bold text-white">Pre-War Co-op Modernization</h3>
+                    <p class="text-gray-300 text-sm">A full interior update respecting the building's classic character while introducing modern, open-plan living.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="https://images.pexels.com/photos/3797991/pexels-photo-3797991.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Restored living room in a classic brick home." class="w-full h-96 object-cover">
+                <div class="project-overlay">
+                    <h3 class="text-xl font-bold text-white">Classic Brick Home Interior Revival</h3>
+                    <p class="text-gray-300 text-sm">Restoring original architectural details and creating a light-filled space with a completely new custom kitchen.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="https://images.pexels.com/photos/1910230/pexels-photo-1910230.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Expanded kitchen and family room in a single-family home." class="w-full h-96 object-cover">
+                <div class="project-overlay">
+                    <h3 class="text-xl font-bold text-white">Family Home & Kitchen Expansion</h3>
+                    <p class="text-gray-300 text-sm">A seamless rear extension and second-story dormer to add much-needed space for a growing family.</p>
+                </div>
+            </div>
+        </div></div></section>
+        
+        <section id="about" class="py-20 bg-gray-800"><div class="container mx-auto px-6 text-center max-w-3xl"><h2 class="text-3xl font-bold mb-4">Your Trusted Queens Contractor</h2><p class="text-gray-400">With over 20 years of experience, we've built our reputation for excellence by serving homeowners throughout the borough. We have a deep understanding of local homes—from classic co-ops to single-family brick houses—and our mission is to exceed client expectations on every project.</p></div></section>
+        
+        <section id="contact" class="py-24 bg-blue-950/50"><div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center"><div><h2 class="text-3xl font-bold mb-2">Get Your Free, No-Obligation Quote</h2><p class="text-gray-400 mb-8">Have a project in mind? We'd love to hear from you. Fill out the form below and let's start the conversation.</p><form action="#" method="POST" class="space-y-6"><div><label for="name" class="sr-only">Name</label><input type="text" name="name" id="name" placeholder="Your Name" required class="w-full bg-gray-800 border border-gray-700 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"></div><div><label for="email" class="sr-only">Email</label><input type="email" name="email" id="email" placeholder="Your Email" required class="w-full bg-gray-800 border border-gray-700 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"></div><div><label for="message" class="sr-only">Message</label><textarea name="message" id="message" rows="4" placeholder="Tell us about your project..." required class="w-full bg-gray-800 border border-gray-700 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"></textarea></div><div><button type="submit" class="w-full bg-yellow-500 text-gray-900 font-bold py-3 px-6 rounded-full hover:bg-yellow-400 transition-colors shadow-lg">Send Message</button></div></form></div><div id="contact-blueprint-animation-container" class="h-96 md:h-full w-full"></div></div></section>
+    </main>
+    <footer class="bg-gray-900 border-t border-gray-700"><div class="container mx-auto px-6 py-8 text-center text-gray-400"><p>&copy; 2024 Z & S Construction Inc. All Rights Reserved.</p><p class="text-sm mt-2">Building the Future, One Project at a Time.</p></div></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const setupInteractiveShowcase = () => {
+                const blueprintContainer = document.getElementById('interactive-blueprint-container');
+                if (!blueprintContainer) return;
+                const detailsPanel = document.getElementById('service-details-panel');
+                const serviceImage = document.getElementById('service-image');
+                const serviceTitle = document.getElementById('service-title');
+                const serviceDescription = document.getElementById('service-description');
+                
+                // === IMAGE URLs UPDATED HERE ===
+                const serviceData = { 
+                    kitchen: { 
+                        title: "Gourmet Kitchen Remodels", 
+                        description: "We design and build functional, beautiful kitchens that serve as the heart of your home. From custom cabinetry and countertops to state-of-the-art appliances, we handle every detail.", 
+                        imageUrl: "https://images.pexels.com/photos/3990599/pexels-photo-3990599.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                    }, 
+                    bathroom: { 
+                        title: "Luxury Bathroom Renovations", 
+                        description: "Transform your bathroom into a private spa. We specialize in custom tile work, walk-in showers, modern fixtures, and efficient layouts to create a space of comfort and relaxation.", 
+                        imageUrl: "https://images.pexels.com/photos/7238759/pexels-photo-7238759.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                    }, 
+                    living: { 
+                        title: "Open-Concept Living Spaces", 
+                        description: "Create a welcoming and expansive area for family and friends. Our expertise in structural modifications allows us to build open-concept living rooms that are perfect for modern life.", 
+                        imageUrl: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                    }, 
+                    entryway: { 
+                        title: "Custom Entryways & Foyers", 
+                        description: "Make a lasting first impression. We create welcoming entryways with custom flooring, lighting, and built-in storage solutions that combine style with everyday function.", 
+                        imageUrl: "https://images.pexels.com/photos/8134913/pexels-photo-8134913.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                    }
+                };
+                
+                blueprintContainer.innerHTML = `<svg viewBox="0 0 500 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="blueprint-title"><title id="blueprint-title">Interactive floor plan of a house</title><path class="services-blueprint-wall" d="M50 50 H450 V300 H50 Z M50 180 H250 M250 50 V300"/><path tabindex="0" aria-label="View kitchen services" data-service="kitchen" class="services-blueprint-zone" d="M250 50 H450 V180 H250 Z"/><path tabindex="0" aria-label="View bathroom services" data-service="bathroom" class="services-blueprint-zone" d="M250 180 H450 V300 H250 Z"/><path tabindex="0" aria-label="View living room services" data-service="living" class="services-blueprint-zone" d="M50 50 H250 V180 H50 Z"/><path tabindex="0" aria-label="View entryway services" data-service="entryway" class="services-blueprint-zone" d="M50 180 H250 V300 H50 Z"/></svg>`;
+                
+                const zones = blueprintContainer.querySelectorAll('.services-blueprint-zone');
+                
+                const updatePanel = (zone) => {
+                    zones.forEach(z => z.classList.remove('highlight')); 
+                    zone.classList.add('highlight'); 
+                    const data = serviceData[zone.dataset.service]; 
+                    gsap.to(detailsPanel, { opacity: 0, duration: 0.3, onComplete: () => { 
+                        serviceTitle.textContent = data.title; 
+                        serviceDescription.textContent = data.description; 
+                        serviceImage.src = data.imageUrl; 
+                        gsap.to(detailsPanel, { opacity: 1, duration: 0.5 }); 
+                    }});
+                };
+                
+                zones.forEach(zone => {
+                    zone.addEventListener('click', () => updatePanel(zone));
+                    zone.addEventListener('mouseenter', () => updatePanel(zone));
+                    zone.addEventListener('focus', () => updatePanel(zone));
+                });
+            };
+
+            const setupPlanningAnimation = () => {
+                const canvas = document.getElementById('planning-canvas');
+                const container = document.getElementById('planning-canvas-container');
+                if (!canvas || !container) return;
+
+                let animationFrameId;
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+                camera.position.set(4, 4, 4);
+                camera.lookAt(0, 0, 0);
+
+                const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                renderer.setPixelRatio(window.devicePixelRatio);
+
+                scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+                const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                dirLight.position.set(5, 10, 7.5);
+                scene.add(dirLight);
+
+                const wireframeMaterial = new THREE.LineBasicMaterial({ color: 0x67e8f9 });
+                const houseGroup = new THREE.Group();
+                scene.add(houseGroup);
+
+                const floorPlanPoints = [ new THREE.Vector3(-1.5, 0, -1), new THREE.Vector3(1.5, 0, -1), new THREE.Vector3(1.5, 0, -1), new THREE.Vector3(1.5, 0, 1), new THREE.Vector3(1.5, 0, 1), new THREE.Vector3(-1.5, 0, 1), new THREE.Vector3(-1.5, 0, 1), new THREE.Vector3(-1.5, 0, -1), new THREE.Vector3(-0.5, 0, -1), new THREE.Vector3(-0.5, 0, 1) ];
+                const floorPlan = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(floorPlanPoints), wireframeMaterial);
+                floorPlan.visible = false;
+                houseGroup.add(floorPlan);
+
+                const wallHeight = 1.5;
+                const walls = [];
+                const wallPositions = [ { p: [-1.5, wallHeight / 2, 0], s: [0.1, wallHeight, 2] }, { p: [1.5, wallHeight / 2, 0], s: [0.1, wallHeight, 2] }, { p: [0, wallHeight / 2, -1], s: [3, wallHeight, 0.1] }, { p: [0.5, wallHeight / 2, 1], s: [2, wallHeight, 0.1] }, { p: [-1.25, wallHeight / 2, 1], s: [0.5, wallHeight, 0.1] }, { p: [-0.5, wallHeight / 2, 0], s: [0.1, wallHeight, 2] } ];
+                wallPositions.forEach(pos => { const wall = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(pos.s[0], pos.s[1], pos.s[2])), wireframeMaterial); wall.position.set(pos.p[0], pos.p[1], pos.p[2]); wall.scale.y = 0; walls.push(wall); houseGroup.add(wall); });
+
+                const roofGroup = new THREE.Group();
+                const roofAngle = Math.PI / 7; const roofWidth = 1.65; const roofYPos = wallHeight + (Math.sin(roofAngle) * roofWidth / 2);
+                const roofLeft = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(roofWidth, 0.1, 2.2)), wireframeMaterial);
+                roofLeft.rotation.z = roofAngle; roofLeft.position.x = -roofWidth / 2;
+                const roofRight = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(roofWidth, 0.1, 2.2)), wireframeMaterial);
+                roofRight.rotation.z = -roofAngle; roofRight.position.x = roofWidth / 2;
+                roofGroup.add(roofLeft, roofRight); roofGroup.position.y = roofYPos; roofGroup.visible = false; houseGroup.add(roofGroup);
+
+                const tl = gsap.timeline({ scrollTrigger: { trigger: container, start: "top center", end: "bottom bottom", scrub: 1.5 } });
+                tl.set(floorPlan, { visible: true }).from(floorPlan.scale, { x: 0, z: 0, duration: 2, ease: 'power2.out' }).to(walls.map(w => w.scale), { y: 1, duration: 4, stagger: 0.2, ease: 'power2.inOut' }).set(floorPlan, { visible: false }).set(roofGroup, { visible: true }).from(roofLeft.position, { x: -5, y: 3, duration: 3, ease: 'power2.out' }, "-=1").from(roofRight.position, { x: 5, y: 3, duration: 3, ease: 'power2.out' }, "<");
+                
+                function animate() { 
+                    animationFrameId = requestAnimationFrame(animate); 
+                    houseGroup.rotation.y += 0.0005; 
+                    renderer.render(scene, camera); 
+                }
+
+                function debounce(func, wait) {
+                    let timeout;
+                    return function executedFunction(...args) {
+                        const later = () => {
+                            clearTimeout(timeout);
+                            func(...args);
+                        };
+                        clearTimeout(timeout);
+                        timeout = setTimeout(later, wait);
+                    };
+                }
+
+                const onResize = debounce(() => {
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                }, 250);
+                window.addEventListener('resize', onResize);
+                
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        animate();
+                    } else {
+                        cancelAnimationFrame(animationFrameId);
+                    }
+                }, { threshold: 0 });
+                observer.observe(canvas);
+            };
+
+            const setupContactAnimation = () => {
+                const blueprints = [ { name: "Residential Plan", paths: ["M50 50 H350 V250 H50 Z", "M150 50 V150 H350", "M150 150 H50", "M250 150 V250", "M140 100 H160 V150 H140 Z", "M200 240 H250 V260 H200 Z", "M280 80 H320 M280 100 H320 M300 80 V100"] }, { name: "Commercial Office", paths: ["M50 50 H350 V250 H50 Z", "M120 50 V180", "M280 250 V120", "M120 180 H200", "M280 120 H200", "M120 110 H50", "M280 190 H350"] }, { name: "Industrial Warehouse", paths: ["M50 50 H350 V250 H50 Z", "M80 50 V80 H140 V50", "M170 50 V80 H230 V50", "M260 50 V80 H320 V50", "M320 150 H350", "M320 150 V250"] } ];
+                const container = document.getElementById('contact-blueprint-animation-container');
+                if (!container) return;
+                let currentBlueprintIndex = 0;
+                function runBlueprintCycle() {
+                    const blueprintData = blueprints[currentBlueprintIndex]; container.innerHTML = ''; const svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg'); svg.setAttribute('viewBox', '0 0 400 300'); svg.classList.add('w-full', 'h-full'); blueprintData.paths.forEach(pathData => { const path = document.createElementNS("http://www.w3.org/2000/svg", 'path'); path.setAttribute('d', pathData); path.classList.add('contact-blueprint-line'); svg.appendChild(path); }); container.appendChild(svg);
+                    const lines = svg.querySelectorAll('.contact-blueprint-line'); const timeline = gsap.timeline({ onComplete: () => { currentBlueprintIndex = (currentBlueprintIndex + 1) % blueprints.length; runBlueprintCycle(); }});
+                    lines.forEach(line => { const length = line.getTotalLength(); line.style.strokeDasharray = length; line.style.strokeDashoffset = length; });
+                    const shuffledLines = gsap.utils.shuffle(Array.from(lines));
+                    timeline.to(shuffledLines, { strokeDashoffset: 0, duration: 0.8, ease: 'power2.inOut', stagger: { each: 0.08, onStart: function() { gsap.fromTo(this.targets()[0], { stroke: '#facc15' }, { stroke: '#67e8f9', duration: 1.2 }); } } }).to(shuffledLines, { duration: 2.5 }).to(shuffledLines, { strokeDashoffset: (i, target) => target.getTotalLength(), duration: 0.4, ease: 'power1.in', stagger: 0.04 });
+                }
+                runBlueprintCycle();
+            };
+
+            // Initialize all animations
+            setupInteractiveShowcase();
+            setupPlanningAnimation();
+            setupContactAnimation();
+        });
+    </script>
+</body>
+</html>
